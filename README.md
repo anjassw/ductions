@@ -2,113 +2,112 @@
 
 **Lightweight Work Management System for Freelancers & Agencies**
 
-Aplikasi manajemen pekerjaan ringan: **timeline Gantt**, daftar tugas, pencatatan jam kerja (timesheet), dan **portal berbagi progres untuk klien** lewat satu tautan.
+A lightweight work management application featuring **Gantt timelines**, to-do lists, **timesheets**, and a **client progress-sharing portal**—all accessible via a single link.
 
-Dibangun dengan **Express + SQLite** — tanpa database server, tanpa build step, tanpa framework frontend. Cukup Node.js.
+Built with **Express + SQLite**—no database server, no build steps, and no frontend frameworks. Just Node.js.
 
-## Kenapa Ductions
+## Why Ductions?
 
-- **Ringan** — satu proses Node, satu file `.db`. Jalan di VPS 512 MB.
-- **Tanpa build** — frontend HTML/CSS/JS biasa. Ubah file, refresh, selesai.
-- **Portal klien** — kirim satu URL, klien lihat progres tanpa perlu akun.
-- **Timesheet bawaan** — catat jam kerja per tugas, otomatis masuk laporan.
-- **Mode gelap** — tema terang/gelap, tersimpan per perangkat.
+- **Lightweight** — runs as a single Node process with one `.db` file. Works on a 512 MB VPS.
+- **No build steps** — uses standard HTML/CSS/JS. Edit a file, refresh, and you're done.
+- **Client portal** — share a single URL; clients can view progress without needing an account.
+- **Built-in timesheets** — track hours per task, automatically compiled into reports.
+- **Dark mode** — light/dark themes, saved per device.
 
-## Fitur
+## Features
 
-| Fitur | Keterangan |
+| Feature | Description |
 | --- | --- |
-| Timeline | Tampilan Gantt + daftar, geser tanggal tugas langsung dari kalender |
-| To Do | Papan tugas per status, dengan sub-tugas (checklist) |
-| Timesheet | Timer start/stop di header, tersedia di semua halaman |
-| Proyek | Klien, warna, rentang tanggal, mode progres (jumlah tugas / jam) |
-| Pengguna | Peran Admin & Pekerja, tarif per jam, reset sandi |
-| Share Link | Portal publik per proyek, opsi tampilkan jam/pekerja/catatan |
-| Log Aktivitas | Jejak audit perubahan data |
+| Timeline | Gantt view + list; adjust task dates directly from the calendar |
+| To-Do | Task boards organized by status, including sub-tasks (checklists) |
+| Timesheets | Start/stop timer in the header, accessible from any page |
+| Projects | Manage clients, colors, date ranges, and progress tracking modes (by task count or hours) |
+| Users | Admin & Worker roles, hourly rates, and password resets |
+| Share Links | Public project portals with options to display hours, team members, or notes |
+| Activity Log | Audit trail for data changes |
 
-## Menjalankan
+## Getting Started
 
-Butuh **Node.js 20+**.
+Requires **Node.js 20+**.
 
 ```bash
-git clone <url-repo-ini>
+git clone <repository-url>
 cd ductions
 npm install
 npm start
 ```
 
-Buka <http://localhost:3000/login.php>
+Open <http://localhost:3000/login.php>
 
-Saat database masih kosong, akun awal dibuat otomatis:
+When the database is empty, an initial account is created automatically:
 
-| Peran | Email | Password |
+| Role | Email | Password |
 | --- | --- | --- |
 | Admin | `admin@example.com` | `admin123` |
-| Pekerja | `worker@example.com` | `worker123` |
+| Worker | `worker@example.com` | `worker123` |
 
-> **Ganti password setelah login pertama.**
+> **Change your password after your first login.**
 
-Mau data contoh (3 proyek, 5 tugas, 1 share link)?
+Want some sample data (3 projects, 5 tasks, 1 share link)?
 
 ```bash
 npm run seed:demo
 ```
 
-## Konfigurasi
+## Configuration
 
-Semua opsional — ada nilai default.
+Everything is optional — default values ​​are provided.
 
-| Variabel | Default | Keterangan |
+| Variable | Default | Description |
 | --- | --- | --- |
-| `PORT` | `3000` | Port HTTP |
+| `PORT` | `3000` | HTTP port |
 | `HOST` | `0.0.0.0` | Interface binding |
-| `DB_PATH` | `./data/ductions.db` | Lokasi file SQLite |
+| `DB_PATH` | `./data/ductions.db` | SQLite file location |
 
-Salin `.env.example` menjadi `.env`, atau set lewat environment langsung.
+Copy `.env.example` to `.env`, or set the variables directly in your environment.
 
-## Struktur proyek
+## Project Structure
 
 ```
-server.js              Backend: skema DB, API, dan static server
-scripts/seed-demo.js   Pengisi data contoh
-data/                  File SQLite (dibuat otomatis, tidak masuk git)
+server.js              Backend: DB schema, API, and static server
+scripts/seed-demo.js   Sample data seeder
+data/                  SQLite file (auto-generated, excluded from Git)
 public/
-  login.php            Halaman masuk
-  app/                 Halaman aplikasi (dashboard, timeline, to do, timesheet, proyek, pengguna)
-  share/index.php      Portal publik untuk klien
-  assets/
-    api.js             Lapisan pemanggil API
-    app.js             Logika antarmuka
-    core.js            Utilitas bersama
-    tema.js            Pengalih mode gelap
-    boot.js            Inisialisasi
-    app.css            Gaya (Tailwind hasil build + komponen)
+login.php            Login page
+app/                 Application pages (dashboard, timeline, to-do, timesheet, projects, users)
+share/index.php      Public portal for clients
+assets/
+api.js             API client layer
+app.js             UI logic
+core.js            Shared utilities
+tema.js            Dark mode switcher
+boot.js            Initialization
+app.css            Styles (compiled Tailwind + components)
 ```
 
-## Cara kerja singkat
+## How it works (briefly)
 
-- **Autentikasi** — login mengembalikan token sesi (berlaku 8 jam) yang dikirim lewat header `X-Ductions-Token`.
-- **Hash sandi** — SHA-256 dari `"sandi::salt"`, salt acak per pengguna.
-- **Progres proyek** — dihitung dari tugas berstatus selesai, atau dari jam tercatat bila `progress_mode = hours`.
-- **Share link** — token acak 32 karakter, opsional PIN, opsional tanggal kedaluwarsa.
+- **Authentication** — logging in returns a session token (valid for 8 hours), which is sent via the `X-Ductions-Token` header.
+- **Password Hashing** — SHA-256 of `"password::salt"`, with a unique, random salt for each user.
+- **Project Progress** — calculated based on completed tasks, or from logged hours if `progress_mode = hours`. - **Share link** — a 32-character random token, with an optional PIN and an optional expiration date.
 
-## Keamanan
+## Security
 
-Repo ini menyertakan `.gitignore` yang menolak `data/`, `.env`, dan file backup. **Jangan pernah commit database atau kredensial.**
+This repository includes a `.gitignore` file that excludes `data/`, `.env`, and backup files. **Never commit databases or credentials.**
 
-Untuk produksi:
+For production:
 
-1. Ganti sandi akun bawaan.
-2. Jalankan di belakang reverse proxy (Nginx/Apache) dengan HTTPS.
-3. Batasi akses port aplikasi dari luar.
-4. Backup `data/ductions.db` secara berkala (file SQLite aman disalin saat mode WAL aktif, gunakan `.backup` untuk konsistensi).
+1. Change the default account password.
+2. Run behind a reverse proxy (Nginx/Apache) with HTTPS.
+3. Restrict external access to the application port.
+4. Back up `data/ductions.db` regularly (SQLite files are safe to copy while WAL mode is enabled; use `.backup` to ensure consistency).
 
-## Lisensi
+## License
 
-[MIT](LICENSE) — bebas dipakai, diubah, dan dijual. Atribusi dihargai, tidak diwajibkan.
+[MIT](LICENSE) — free to use, modify, and sell. Attribution is appreciated but not required.
 
-## Kredit
+## Credits
 
-Dibuat oleh **[Anjas S](https://github.com/anjassw)**.
+Created by **[Anjas S](https://github.com/anjassw)**.
 
-Kalau proyek ini berguna, tinggalkan bintang di repo — itu membantu.
+If you find this project useful, please leave a star on the repository — it helps!

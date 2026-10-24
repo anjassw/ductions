@@ -1,0 +1,441 @@
+/* ==========================================================
+   DUCTIONS — NEOBRUTALISM (BRUTX UI) DESIGN SYSTEM
+   Tema terang & gelap lewat CSS variable.
+   Variabel data-tema diset di <html> oleh tema.js (localStorage).
+   ========================================================== */
+
+:root {
+  /* Kanvas & tinta */
+  --d-bg: #FFFDF5;
+  --d-ink: #000000;
+  --d-surface: #FFFFFF;
+  --d-surface-alt: #FAFAFA;
+  --d-surface-soft: #F4F4F5;
+  --d-muted: #52525B;
+
+  /* Aksen */
+  --d-yellow: #FFDE00;
+  --d-lime: #A3E635;
+  --d-cyan: #22D3EE;
+  --d-pink: #FF6B9E;
+  --d-purple: #A855F7;
+  --d-orange: #FB923C;
+  --d-red: #FF4D4D;
+  --d-indigo: #6366F1;
+
+  /* Garis & bayangan */
+  --d-line: #000000;
+  --d-shadow: #000000;
+
+  /* Sorotan input */
+  --d-focus-bg: #FEF9C3;
+
+  /* Warna teks di atas aksen */
+  --d-on-accent: #000000;
+
+  color-scheme: light;
+}
+
+html[data-tema="gelap"] {
+  --d-bg: #0B0B0E;
+  --d-ink: #F4F4F5;
+  --d-surface: #17171C;
+  --d-surface-alt: #1F1F26;
+  --d-surface-soft: #26262E;
+  --d-muted: #A1A1AA;
+
+  /* Aksen dinaikkan sedikit agar tetap kontras di atas hitam */
+  --d-yellow: #FFDE00;
+  --d-lime: #B4F03C;
+  --d-cyan: #3DDCF2;
+  --d-pink: #FF7FAB;
+  --d-purple: #B57BFF;
+  --d-orange: #FFA059;
+  --d-red: #FF6161;
+  --d-indigo: #818CF8;
+
+  --d-line: #F4F4F5;
+  --d-shadow: #000000;
+
+  --d-focus-bg: #2A2A15;
+
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--d-bg);
+  background-image: radial-gradient(var(--d-ink) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--d-ink);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+/* Tailwind preflight mengunci warna teks di beberapa elemen —
+   paksa ikut variabel tema supaya mode gelap benar-benar gelap. */
+h1, h2, h3, h4, h5, h6, p, span, div, strong, b, em,
+li, td, th, label, a, small, time, figcaption, legend {
+  color: inherit;
+}
+
+/* Elemen yang memang bukan turunan .brut-card tetap harus mewarisi tinta */
+#appView, #loginView, #clientTrackView, main {
+  color: var(--d-ink);
+}
+
+html[data-tema="gelap"] body {
+  background-image: radial-gradient(var(--d-ink) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ---------- Kelas dasar ---------- */
+
+.brut-border {
+  border: 3px solid var(--d-line);
+}
+.brut-border-sm {
+  border: 2px solid var(--d-line);
+}
+
+.brut-shadow {
+  box-shadow: 5px 5px 0px 0px var(--d-shadow);
+}
+.brut-shadow-sm {
+  box-shadow: 3px 3px 0px 0px var(--d-shadow);
+}
+.brut-shadow-lg {
+  box-shadow: 8px 8px 0px 0px var(--d-shadow);
+}
+
+.brut-btn {
+  border: 3px solid var(--d-line);
+  box-shadow: 4px 4px 0px 0px var(--d-shadow);
+  transition: all 0.12s cubic-bezier(0, 0, 0.2, 1);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+.brut-btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px var(--d-shadow);
+}
+.brut-btn:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0px 0px var(--d-shadow);
+}
+.brut-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.brut-card {
+  background-color: var(--d-surface);
+  border: 3px solid var(--d-line);
+  box-shadow: 5px 5px 0px 0px var(--d-shadow);
+}
+
+.brut-input {
+  border: 3px solid var(--d-line);
+  background-color: var(--d-surface);
+  color: var(--d-ink);
+  padding: 0.6rem 0.85rem;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.15s ease;
+}
+.brut-input::placeholder {
+  color: var(--d-muted);
+}
+.brut-input:focus {
+  background-color: var(--d-focus-bg);
+  box-shadow: 4px 4px 0px 0px var(--d-shadow);
+}
+
+.brut-badge {
+  border: 2px solid var(--d-line);
+  box-shadow: 2px 2px 0px 0px var(--d-shadow);
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ---------- FullCalendar Overrides ---------- */
+
+.fc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--d-surface);
+  color: var(--d-ink);
+  border: 3px solid var(--d-line);
+  box-shadow: 5px 5px 0px 0px var(--d-shadow);
+  padding: 1rem;
+}
+.fc-theme-standard td, .fc-theme-standard th, .fc-theme-standard .fc-scrollgrid {
+  border: 2px solid var(--d-line) !important;
+}
+.fc .fc-toolbar-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem !important;
+  text-transform: uppercase;
+  color: var(--d-ink);
+}
+.fc .fc-col-header-cell-cushion,
+.fc .fc-daygrid-day-number,
+.fc .fc-list-day-text,
+.fc .fc-list-day-side-text {
+  color: var(--d-ink) !important;
+  font-weight: 700;
+}
+.fc .fc-button-primary {
+  background-color: var(--d-yellow) !important;
+  color: #000 !important;
+  border: 2px solid var(--d-line) !important;
+  box-shadow: 3px 3px 0px 0px var(--d-shadow) !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  margin: 2px !important;
+}
+.fc .fc-button-primary:hover {
+  background-color: var(--d-lime) !important;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: var(--d-pink) !important;
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px var(--d-shadow) !important;
+}
+.fc-event {
+  border: 2px solid var(--d-line) !important;
+  box-shadow: 2px 2px 0px 0px var(--d-shadow) !important;
+  border-radius: 0 !important;
+  padding: 2px 5px !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+  cursor: pointer;
+}
+.fc-day-today {
+  background-color: var(--d-focus-bg) !important;
+}
+.fc-theme-standard .fc-list {
+  border: 2px solid var(--d-line) !important;
+  background: var(--d-surface);
+}
+.fc .fc-list-event:hover td {
+  background-color: var(--d-surface-soft) !important;
+}
+
+/* ---------- Scrollbar ---------- */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--d-bg);
+  border-left: 2px solid var(--d-line);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--d-yellow);
+  border: 2px solid var(--d-line);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--d-pink);
+}
+
+/* ==========================================================
+   OVERRIDE UTILITAS TAILWIND UNTUK TEMA GELAP
+   Halaman memakai kelas Tailwind langsung (bg-white, text-black,
+   bg-amber-50, dst). Blok ini memetakannya ke variabel tema
+   supaya tidak perlu menulis ulang markup.
+   ========================================================== */
+
+html[data-tema="gelap"] .bg-white,
+html[data-tema="gelap"] .bg-brut-bg {
+  background-color: var(--d-surface) !important;
+}
+html[data-tema="gelap"] .bg-zinc-50 {
+  background-color: var(--d-surface-alt) !important;
+}
+html[data-tema="gelap"] .bg-zinc-100 {
+  background-color: var(--d-surface-soft) !important;
+}
+html[data-tema="gelap"] .bg-zinc-200 {
+  background-color: #2E2E38 !important;
+}
+html[data-tema="gelap"] .bg-amber-50 {
+  background-color: #26220C !important;
+}
+html[data-tema="gelap"] .bg-amber-100 {
+  background-color: #322B0E !important;
+}
+
+html[data-tema="gelap"] .text-black {
+  color: var(--d-ink) !important;
+}
+html[data-tema="gelap"] .text-zinc-400 {
+  color: #8A8A96 !important;
+}
+html[data-tema="gelap"] .text-zinc-500 {
+  color: #9C9CA8 !important;
+}
+html[data-tema="gelap"] .text-zinc-600 {
+  color: var(--d-muted) !important;
+}
+html[data-tema="gelap"] .text-zinc-700,
+html[data-tema="gelap"] .text-zinc-800,
+html[data-tema="gelap"] .text-zinc-900 {
+  color: #E4E4E7 !important;
+}
+
+html[data-tema="gelap"] .border-black {
+  border-color: var(--d-line) !important;
+}
+html[data-tema="gelap"] .divide-black > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--d-line) !important;
+}
+
+/* Aksen: teks di atasnya tetap hitam agar kontras terjaga */
+html[data-tema="gelap"] .bg-brut-yellow,
+html[data-tema="gelap"] .bg-brut-yellow *,
+html[data-tema="gelap"] .bg-brut-lime,
+html[data-tema="gelap"] .bg-brut-lime *,
+html[data-tema="gelap"] .bg-brut-cyan,
+html[data-tema="gelap"] .bg-brut-cyan *,
+html[data-tema="gelap"] .bg-brut-orange,
+html[data-tema="gelap"] .bg-brut-orange * {
+  color: #000 !important;
+}
+html[data-tema="gelap"] .bg-brut-pink,
+html[data-tema="gelap"] .bg-brut-pink *,
+html[data-tema="gelap"] .bg-brut-purple,
+html[data-tema="gelap"] .bg-brut-purple *,
+html[data-tema="gelap"] .bg-brut-indigo,
+html[data-tema="gelap"] .bg-brut-indigo * {
+  color: #0B0B0E !important;
+}
+
+/* Pengecualian: badge/label latar putih di dalam kartu aksen tetap ikut tema */
+html[data-tema="gelap"] .bg-brut-yellow .bg-white,
+html[data-tema="gelap"] .bg-brut-lime .bg-white,
+html[data-tema="gelap"] .bg-brut-cyan .bg-white,
+html[data-tema="gelap"] .bg-brut-orange .bg-white {
+  color: var(--d-ink) !important;
+}
+
+/* Elemen yang memakai bg-black/teks putih jadi permukaan terang di tema gelap */
+html[data-tema="gelap"] .bg-black {
+  background-color: var(--d-surface-soft) !important;
+  color: var(--d-ink) !important;
+}
+html[data-tema="gelap"] .bg-black.text-white {
+  color: var(--d-ink) !important;
+}
+
+/* Warna status: teks & latar khusus mode gelap */
+html[data-tema="gelap"] .text-red-700 {
+  color: #FF8A8A !important;
+}
+html[data-tema="gelap"] .text-emerald-700,
+html[data-tema="gelap"] .text-green-700 {
+  color: #6EE7A8 !important;
+}
+html[data-tema="gelap"] .bg-red-600 {
+  background-color: #C23434 !important;
+  color: #FFFFFF !important;
+}
+html[data-tema="gelap"] .bg-emerald-600,
+html[data-tema="gelap"] .bg-green-600 {
+  background-color: #16794A !important;
+  color: #FFFFFF !important;
+}
+html[data-tema="gelap"] .bg-zinc-400 {
+  background-color: #3F3F4A !important;
+}
+html[data-tema="gelap"] .bg-amber-50 .text-amber-900,
+html[data-tema="gelap"] .text-amber-900 {
+  color: #FFE08A !important;
+}
+
+/* Modal & overlay */
+html[data-tema="gelap"] .bg-black\/50 {
+  background-color: rgba(0, 0, 0, 0.72) !important;
+}
+
+/* Tombol tema */
+.tombol-tema {
+  border: 2px solid var(--d-line);
+  box-shadow: 3px 3px 0px 0px var(--d-shadow);
+  background: var(--d-surface);
+  color: var(--d-ink);
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  flex-shrink: 0;
+}
+.tombol-tema:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px 0px var(--d-shadow);
+  background: var(--d-yellow);
+  color: #000;
+}
+.tombol-tema:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px var(--d-shadow);
+}
+
+/* ==========================================================
+   ANIMASI — didefinisikan sendiri, tidak bergantung Tailwind CDN.
+   Tailwind Play CDN hanya memindai DOM sekali saat halaman dimuat.
+   Elemen yang dibuat belakangan oleh JS (mis. widget timer, badge
+   "live") tidak pernah kebagian CSS-nya, sehingga animate-ping /
+   animate-spin / animate-pulse tampil diam. Keyframes di bawah
+   berlaku untuk SEMUA elemen, kapan pun ia dibuat.
+   ========================================================== */
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hormati preferensi pengguna yang minta gerakan dikurangi. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-ping,
+  .animate-spin,
+  .animate-pulse {
+    animation: none;
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ductions",
+  "version": "1.0.0",
+  "description": "Ductions — Lightweight Work Management System for Freelancers & Agencies. Timeline, to do, timesheet, dan portal share klien. Express + SQLite.",
+  "main": "server.js",
+  "author": "Anjas S (https://github.com/anjassw)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anjassw/ductions.git"
+  },
+  "homepage": "https://github.com/anjassw/ductions#readme",
+  "bugs": {
+    "url": "https://github.com/anjassw/ductions/issues"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "seed:demo": "node scripts/seed-demo.js"
+  },
+  "keywords": [
+    "project-management",
+    "timeline",
+    "timesheet",
+    "express",
+    "sqlite"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

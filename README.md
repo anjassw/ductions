@@ -1,6 +1,6 @@
-# Ductions
+# Ductions - Lightweight Work Management System for Freelancers & Agencies
 
-**Lightweight Work Management System for Freelancers & Agencies**
+![Alt text of the image](https://github.com/anjassw/ductions/blob/main/Screenshot-Ductions.png)
 
 A lightweight work management application featuring **Gantt timelines**, to-do lists, **timesheets**, and a **client progress-sharing portal**—all accessible via a single link.
 

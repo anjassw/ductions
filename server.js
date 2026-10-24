@@ -1,10 +1,6 @@
 /**
  * Ductions — Backend Express + SQLite
  *
- * Port langsung dari Google Apps Script (backend.js, 8 sheet) ke Express + SQLite.
- * Skema, aturan akses, dan perilaku API dipertahankan agar frontend tidak perlu diubah
- * selain adapter api() di index.html.
- *
  * Zona waktu: Asia/Jakarta (WIB)
  * Sesi: 8 jam, token 32+ karakter
  */

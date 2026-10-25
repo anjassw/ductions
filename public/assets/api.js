@@ -1,7 +1,5 @@
 /* ==========================================================================
    DUCTIONS — API.JS
-   Adapter tunggal: Apps Script (callGAS) / Express+SQLite (callServer) /
-   mock in-memory. Semua halaman memanggil lewat objek `api`.
    ========================================================================== */
     /**************************************************************
      * 3. PEMBUNGKUS OBJEK `api` (SESUAI PRD BAB 8 & 10.4)
@@ -13,8 +11,7 @@
         .withFailureHandler(err => reject(err.message || String(err)))[fn](token, ...args);
     });
 
-    /* Jalur SERVER: HTTP ke backend Express + SQLite.
-       Kontrak respons identik dengan Apps Script: { ok, data } atau { ok, error }. */
+    /* Jalur SERVER: HTTP ke backend Express + SQLite. */
     const callServer = async (fn, ...args) => {
       const token = sessionStorage.getItem('ductions_token') || '';
       const badan = {};

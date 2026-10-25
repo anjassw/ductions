@@ -4,17 +4,15 @@
    Di mode server, mockDB ditimpa data SQLite lewat api.getBootstrapData().
    ========================================================================== */
     /**************************************************************
-     * 1. DETEKSI LINGKUNGAN (GEMINI CANVAS vs GOOGLE APPS SCRIPT)
+     * 1. DETEKSI LINGKUNGAN
      **************************************************************/
     const IS_GAS = typeof google !== 'undefined' && google.script && google.script.run;
-    // Mode Server: backend Express + SQLite (bukan Google Apps Script)
+    // Mode Server: backend Express + SQLite
     const IS_SERVER = !IS_GAS && /^https?:$/.test(location.protocol);
     const ENV_LABEL = IS_GAS ? 'MODE: APPS SCRIPT' : (IS_SERVER ? 'MODE: SERVER' : 'MODE: CANVAS PREVIEW');
 
     /**************************************************************
      * 2. DATABASE SIMULASI DI MEMORI (SESUAI SKEMA 8 SHEET BAB 7 PRD)
-     *    Otomatis dipakai saat preview di Canvas; saat di Apps Script
-     *    akan memanggil fungsi di Code.gs
      **************************************************************/
     var mockDB = {
       users: [
